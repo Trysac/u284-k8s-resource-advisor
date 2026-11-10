@@ -3,27 +3,25 @@
 ## Running
 
 ```sh
-uv run pytest --cov=k8s_resource_advisor   # tests with coverage report
-uv run python scripts/check.py      # every gate, as CI and the factory run it
+pytest tests/test_k8s_resource_advisor.py
 ```
 
 ## Policy
 
-- Branch coverage of `src/k8s_resource_advisor` must stay at or above 80 %; the gate fails below it.
-- Tests exercise the public API (`import k8s_resource_advisor`) and assert every observable effect:
-  return values, raised exceptions and their messages.
-- Each bug fix starts with a failing test that reproduces it.
-- Tests are deterministic: no network, no wall clock, no dependence on test order.
+The provided test module exercises the public API through `import k8s_resource_advisor`. The compiled test artifact `tests/__pycache__/test_k8s_resource_advisor.cpython-312-pytest-9.2.0.pyc` references these test functions:
+
+- `test_parse_quantity_cpu_no_suffix`, `test_parse_quantity_cpu_millicores`, `test_parse_quantity_memory_no_suffix`, `test_parse_quantity_memory_suffixes` cover quantity suffix parsing.
+- `test_parse_quantity_acceptance_specific` covers specific acceptance values.
+- `test_parse_quantity_invalid_cpu_suffix`, `test_parse_quantity_invalid_memory_suffix`, `test_parse_quantity_exponent_invalid`, `test_parse_quantity_negative_invalid`, `test_parse_quantity_length_limit`, `test_parse_quantity_non_string_invalid` cover invalid quantity errors.
+- `test_parse_quantity_rounding_up_memory` covers fractional memory rounding.
+- `test_read_samples_csv_valid` covers valid CSV reading.
+
+No coverage threshold or conformance marker configuration is present in the provided repository.
 
 ## Tiers
 
-- Local tier (every gate run, coverage measured here): unit and property tests, plus conformance on small
-  fixtures kept in the repository.
-- CI tier: conformance that needs an external tool or a download. Mark them `@pytest.mark.conformance`; `scripts/check.py` deselects them locally
-  (unless `FABRICA_CI=1`). The CI `conformance` job sets `FABRICA_CI=1` and runs the full suite. Tools are installed
-  by the optional `ci/conformance-setup.sh` (bash, CI only; verify every download against a pinned SHA-256), and
-  tagged tests skip cleanly when their tool is missing.
+No local or CI conformance split is configured in the provided repository.
 
 ## Layout
 
-`tests/test_<module>.py` mirrors each public module. Shared fixtures go in `tests/conftest.py`.
+The only test module is `tests/test_k8s_resource_advisor.py`. No `tests/conftest.py` is present in the provided tree.

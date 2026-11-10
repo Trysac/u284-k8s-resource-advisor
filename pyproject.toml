@@ -19,6 +19,9 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+k8s-resource-advisor = "k8s_resource_advisor.__main__:main"
+
 [project.urls]
 Homepage = "https://github.com/Trysac/u284-k8s-resource-advisor"
 Source = "https://github.com/Trysac/u284-k8s-resource-advisor"
