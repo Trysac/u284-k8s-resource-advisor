@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added k8s_resource_advisor package: quantity parsing, CSV sample reading, percentile-based recommendation, assessment, YAML patch rendering, and CLI.
 - Initial project structure from the factory utility template.
